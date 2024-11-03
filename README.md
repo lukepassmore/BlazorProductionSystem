@@ -11,6 +11,7 @@ ProductionSystem is a Blazor Web App developed to simulate the process of manufa
 4. [Project Structure](#project-structure)
 5. [Usage](#usage)
 6. [Additional Notes](#additional-notes)
+7. [Possible Extensions](#possible-extensions)
 
 ## Project Overview
 
