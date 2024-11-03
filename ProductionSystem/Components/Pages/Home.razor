@@ -1,0 +1,64 @@
+﻿@page "/"
+@using ProductionSystem.OrderService
+@inject OrderService OrderService
+@inject OrderService OrderDTO
+
+<PageTitle>Lukes Blazor MES Demo</PageTitle>
+
+<h3>Lukes Blazor MES Demo</h3>
+
+<!-- Order list -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Product</th>
+            <th>Status</th>
+            <th>Stage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in orders)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.CustomerName</td>
+                <td>@order.Product</td>
+                <td>@order.Status</td>
+                <td>@GetOperationName(order.OperationId)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    // List to store the fetched orders
+    private List<OrderDTO> orders = new();
+
+    // Fetch the orders from the service on init
+    protected override void OnInitialized()
+    {
+        orders = OrderService.GetOrders().ToList();
+    }
+
+    // Helper method for operation names
+    private string GetOperationName(int OperationId)
+    {
+        // Pick op name from array
+        return OperationId switch
+        {
+            0 => "Pending",
+            1 => "Design",
+            2 => "Material Planning",
+            3 => "BoM Fabrication",
+            4 => "BoM Assembley",
+            5 => "Inspection",
+            6 => "PLC Assembley",
+            7 => "Final QA",
+            8 => "Packing",
+            9 => "Despatch",
+            _ => "Unknown Stage"
+        };
+    }
+}
