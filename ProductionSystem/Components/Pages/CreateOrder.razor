@@ -1,0 +1,79 @@
+﻿@page "/create-order"
+@using ProductionSystem.OrderService
+@inject OrderService OrderService
+@inject OrderService OrderDTO
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+<h3>Create Order</h3>
+
+<div class="card">
+    <div class="card-body">
+        <form>
+            <div class="form-group">
+                <label for="customerName">Customer Name</label>
+                <input type="text" class="form-control" id="customerName" @bind="newOrder.CustomerName" required />
+            </div>
+            <div class="form-group">
+                <label for="product">Product</label>
+                <input type="text" class="form-control" id="product" @bind="newOrder.Product" required />
+            </div>
+            <div class="form-group">
+                <label for="operationId">Stage</label>
+                <select class="form-control" id="operationId" @bind="newOrder.OperationId">
+                    <option value="0">Design Phase</option>
+                    <option value="1">Material Procurement</option>
+                    <option value="2">Component Fabrication</option>
+                    <option value="3">Assembly</option>
+                    <option value="4">Quality Inspection</option>
+                    <option value="5">System Integration and Testing</option>
+                    <option value="6">Final Quality Assurance</option>
+                    <option value="7">Packaging and Preparation for Shipping</option>
+                    <option value="8">Dispatch and Delivery</option>
+                </select>
+            </div>
+            <button class="btn btn-primary mt-3" onclick="HandleSubmit()">Add Order</button>
+        </form>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" @ref="toastRef">
+        <div class="toast-header">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Order has been successfully created!
+        </div>
+    </div>
+</div>
+
+@code {
+    private OrderDTO newOrder = new OrderDTO();
+    private ElementReference toastRef;
+
+    // on submit click
+    private void HandleSubmit()
+    {   
+        // Call the create order function from orderService
+        OrderService.CreateOrder(newOrder);
+
+        // Clear the form fields after successful submission
+        newOrder = new OrderDTO();
+
+        // Show the toast notification
+        ShowToast();
+
+        // Navigate back home
+        // Navigation.NavigateTo("/", forceLoad: true);
+    }
+
+    // Toast show
+    public async void ShowToast()
+    {
+        // Called via Bootstrap js
+        await JS.InvokeVoidAsync("bootstrap.Toast", toastRef);
+    }
+}

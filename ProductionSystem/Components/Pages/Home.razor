@@ -8,8 +8,8 @@
 <h3>Lukes Blazor MES Demo</h3>
 
 <!-- Order list -->
-<table class="table table-striped">
-    <thead>
+<table class="table table-striped table-hover table-bordered table-sm">
+    <thead class="thead-dark">
         <tr>
             <th>Order ID</th>
             <th>Customer Name</th>
@@ -31,6 +31,8 @@
         }
     </tbody>
 </table>
+
+<a href="/create-order" class="btn btn-success mb-3">New Order</a>
 
 @code {
     // List to store the fetched orders

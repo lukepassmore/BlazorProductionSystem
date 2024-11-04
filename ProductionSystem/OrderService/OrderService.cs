@@ -4,7 +4,40 @@
     public class OrderService
     {
         // A private list to store orders in memory (acting as a temporary in-memory database for demonstration)
-        private readonly List<OrderDTO> _orders = new();
+        private readonly List<OrderDTO> _orders;
+
+        // Constructor to initialize demo data
+        public OrderService()
+        {
+            // Initialize the _orders list with sample orders
+            _orders = new List<OrderDTO>
+            {
+                new OrderDTO
+                {
+                    Id = Guid.NewGuid(),
+                    CustomerName = "John Doe",
+                    Product = "Packaging Machine A",
+                    Status = "In Progress",
+                    OperationId = 2  // Component Fabrication
+                },
+                new OrderDTO
+                {
+                    Id = Guid.NewGuid(),
+                    CustomerName = "Jane Smith",
+                    Product = "Packaging Machine B",
+                    Status = "Pending",
+                    OperationId = 0  // Design Phase
+                },
+                new OrderDTO
+                {
+                    Id = Guid.NewGuid(),
+                    CustomerName = "Acme Corp",
+                    Product = "Packaging Machine C",
+                    Status = "Completed",
+                    OperationId = 8  // Dispatch and Delivery
+                }
+            };
+        }
 
         // Method to retrieve all orders
         public IEnumerable<OrderDTO> GetOrders()
