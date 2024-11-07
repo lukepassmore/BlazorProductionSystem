@@ -1,5 +1,6 @@
 using ProductionSystem.Components;
 using ProductionSystem.OrderService;
+using ProductionSystem.ManufacturingService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,9 @@ builder.Services.AddRazorComponents()
 
 // Register OrderService as a singleton or scoped service
 builder.Services.AddSingleton<OrderService>();
+
+// Register ManufacturingService as a singleton or scoped service
+builder.Services.AddSingleton<ManufacturingService>();
 
 var app = builder.Build();
 

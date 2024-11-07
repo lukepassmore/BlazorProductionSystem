@@ -1,6 +1,12 @@
 ﻿namespace ProductionSystem.ManufacturingService
 {
-    public class ManufacturingDTO
+    // DTO class for process stage
+    public class StageDTO
     {
+        // Unique identifier for the stage
+        public Guid Id { get; set; }
+
+        // Stage name - displayed against order
+        public string Name { get; set; }
     }
 }

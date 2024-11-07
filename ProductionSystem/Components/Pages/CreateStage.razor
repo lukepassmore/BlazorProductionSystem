@@ -1,0 +1,59 @@
+﻿@page "/create-stage"
+@using ProductionSystem.ManufacturingService
+@inject ManufacturingService ManufacturingService
+@inject ManufacturingService StageDTo
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+<h3>Create Stage</h3>
+
+<div class="card">
+    <div class="card-body">
+        <form>
+            <div class="form-group">
+                <label for="customerName">Customer Name</label>
+                <input type="text" class="form-control" id="customerName" @bind="newStage.Name" required />
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" @ref="toastRef">
+        <div class="toast-header">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Stage has been successfully created!
+        </div>
+    </div>
+</div>
+
+@code {
+    private StageDTO newStage = new StageDTO();
+    private ElementReference toastRef;
+
+    // on submit click
+    private void HandleSubmit()
+    {
+        // Call the create order function from orderService
+        ManufacturingService.CreateStage(newStage);
+
+        // Clear the form fields after successful submission
+        newStage = new StageDTO();
+
+        // Show the toast notification
+        ShowToast();
+
+        // Navigate back home
+        // Navigation.NavigateTo("/", forceLoad: true);
+    }
+
+    private async void ShowToast()
+    {
+        // Called via Bootstrap js
+        await JS.InvokeVoidAsync("bootstrap.Toast", toastRef);
+    }
+}
